@@ -18,8 +18,15 @@ class _PolylineUpdate {
   Polyline polyline;
 
   Map<String, dynamic> _toMap(){
-    Map<String, dynamic> args =  <String, dynamic>{};
-    args['polylineToUpdate'] = polyline._toList();
+    final Map<String, dynamic> args =  <String, dynamic>{};
+
+    void addIfNonNull(String fieldName, dynamic value) {
+      if (value != null) {
+        args[fieldName] = value;
+      }
+    }
+
+    addIfNonNull('polylineToUpdate', polyline._toList());
     return args;
   }
 }

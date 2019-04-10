@@ -18,5 +18,6 @@ class Polyline {
     points.forEach((ll){
       json.add(_llToJson(ll));
     });
+    return json;
   }
 }
