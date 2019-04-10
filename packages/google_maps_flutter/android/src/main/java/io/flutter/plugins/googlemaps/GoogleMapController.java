@@ -73,7 +73,8 @@ final class GoogleMapController
   private final Context context;
   private final MarkersController markersController;
   private List<Object> initialMarkers;
-
+  private final PolylineController polylineController;
+//  private Polyline currentPolyline;
   GoogleMapController(
       int id,
       Context context,
@@ -91,6 +92,7 @@ final class GoogleMapController
     methodChannel.setMethodCallHandler(this);
     this.registrarActivityHashCode = registrar.activity().hashCode();
     this.markersController = new MarkersController(methodChannel);
+    this.polylineController = new PolylineController();
   }
 
   @Override
@@ -164,14 +166,17 @@ final class GoogleMapController
     updateMyLocationEnabled();
     markersController.setGoogleMap(googleMap);
     updateInitialMarkers();
-    Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-            .add(
-                    new LatLng(-35.016, 143.321),
-                    new LatLng(-34.747, 145.592),
-                    new LatLng(-34.364, 147.891),
-                    new LatLng(-33.501, 150.217),
-                    new LatLng(-32.306, 149.248),
-                    new LatLng(-32.491, 147.309)));
+    polylineController.setGoogleMap(googleMap);
+
+    List<LatLng> latLngs = new ArrayList<>();
+    latLngs.add(new LatLng(-35.016, 143.321));
+    latLngs.add(new LatLng(-34.747, 145.592));
+    latLngs.add(new LatLng(-34.364, 147.891));
+    latLngs.add(new LatLng(-33.501, 150.217));
+    latLngs.add(new LatLng(-32.306, 149.248));
+    latLngs.add(new LatLng(-32.491, 147.309));
+
+    polylineController.setPoints(latLngs);
   }
 
   @Override
