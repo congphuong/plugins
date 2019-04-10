@@ -34,6 +34,7 @@ class GoogleMap extends StatefulWidget {
     this.onCameraMove,
     this.onCameraIdle,
     this.onTap,
+    this.polyline,
   })  : assert(initialCameraPosition != null),
         super(key: key);
 
@@ -70,6 +71,8 @@ class GoogleMap extends StatefulWidget {
 
   /// Markers to be placed on the map.
   final Set<Marker> markers;
+
+  final Polyline polyline;
 
   /// Called when the camera starts moving.
   ///
@@ -140,6 +143,7 @@ class _GoogleMapState extends State<GoogleMap> {
       Completer<GoogleMapController>();
 
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
+  Polyline _polyline;
   _GoogleMapOptions _googleMapOptions;
 
   @override
@@ -176,6 +180,7 @@ class _GoogleMapState extends State<GoogleMap> {
     super.initState();
     _googleMapOptions = _GoogleMapOptions.fromWidget(widget);
     _markers = _keyByMarkerId(widget.markers);
+    _polyline = widget.polyline;
   }
 
   @override
@@ -183,6 +188,7 @@ class _GoogleMapState extends State<GoogleMap> {
     super.didUpdateWidget(oldWidget);
     _updateOptions();
     _updateMarkers();
+    _updatePolyline();
   }
 
   void _updateOptions() async {
@@ -202,6 +208,11 @@ class _GoogleMapState extends State<GoogleMap> {
     controller._updateMarkers(
         _MarkerUpdates.from(_markers.values.toSet(), widget.markers));
     _markers = _keyByMarkerId(widget.markers);
+  }
+  void _updatePolyline() async {
+    final GoogleMapController controller = await _controller.future;
+    controller._updatePolyline(_PolylineUpdate.from(_polyline, widget.polyline));
+    _polyline = widget.polyline;
   }
 
   Future<void> onPlatformViewCreated(int id) async {

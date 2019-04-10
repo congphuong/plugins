@@ -15,6 +15,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import io.flutter.view.FlutterMain;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -322,5 +324,14 @@ class Convert {
       final List<?> anchorData = toList(infoWindowAnchor);
       sink.setInfoWindowAnchor(toFloat(anchorData.get(0)), toFloat(anchorData.get(1)));
     }
+  }
+
+  static void interpretPolyline(List<Object> o, PolylineOptionsSink sink){
+    List<LatLng> points = new ArrayList<>();
+
+    for (Object i:o) {
+      points.add(toLatLng(i));
+    }
+    sink.setPoints(points);
   }
 }

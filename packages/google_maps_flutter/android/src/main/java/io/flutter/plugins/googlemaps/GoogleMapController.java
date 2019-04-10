@@ -268,6 +268,13 @@ final class GoogleMapController
           result.success(googleMap.getUiSettings().isRotateGesturesEnabled());
           break;
         }
+      case "polyline#update":
+        {
+          Object o = call.argument("polylineToUpdate");
+          polylineController.updatePolyline((List<Object>) o);
+          result.success(null);
+          break;
+        }
       default:
         result.notImplemented();
     }

@@ -36,6 +36,10 @@ public class PolylineController implements PolylineOptionsSink {
         polyline = googleMap.addPolyline(new PolylineOptions().addAll(points));
     }
 
+    void updatePolyline(List<Object> o){
+        Convert.interpretPolyline(o, this);
+    }
+
     void remove(){
         polyline.remove();
         polyline = null;
