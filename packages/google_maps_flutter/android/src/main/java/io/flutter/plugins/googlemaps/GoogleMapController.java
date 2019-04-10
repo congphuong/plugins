@@ -29,6 +29,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry;
@@ -161,6 +164,14 @@ final class GoogleMapController
     updateMyLocationEnabled();
     markersController.setGoogleMap(googleMap);
     updateInitialMarkers();
+    Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
+            .add(
+                    new LatLng(-35.016, 143.321),
+                    new LatLng(-34.747, 145.592),
+                    new LatLng(-34.364, 147.891),
+                    new LatLng(-33.501, 150.217),
+                    new LatLng(-32.306, 149.248),
+                    new LatLng(-32.491, 147.309)));
   }
 
   @Override
